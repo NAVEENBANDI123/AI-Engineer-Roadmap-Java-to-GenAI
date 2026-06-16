@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Engineer Roadmap: From Java/Software Engineer to GenAI Expert (2026)</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #f59e0b;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-heading: #f8fafc;
+            --border: #334155;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --sidebar-w: 300px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0; left: 0;
+            width: var(--sidebar-w);
+            height: 100vh;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 1.5rem 0;
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+        .sidebar-header {
+            padding: 0 1.2rem 1rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        .sidebar-header h2 {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .sidebar nav a {
+            display: block;
+            padding: 0.45rem 1.2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .sidebar nav a:hover, .sidebar nav a.active {
+            color: var(--text-heading);
+            background: rgba(99,102,241,0.08);
+            border-left-color: var(--primary);
+        }
+        .sidebar nav .nav-section {
+            padding: 0.6rem 1.2rem 0.3rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Main content */
+        .main {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            min-height: 100vh;
+            padding: 3rem 4rem 6rem;
+            max-width: 900px;
+        }
+        /* Mobile toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem; left: 1rem;
+            z-index: 200;
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            width: 40px; height: 40px;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 2rem 1.5rem 4rem; }
+            .menu-toggle { display: flex; align-items: center; justify-content: center; }
+        }
+        /* Typography */
+        h1 { font-size: 2.2rem; color: var(--text-heading); margin-bottom: 0.5rem; font-weight: 800; }
+        h2 { font-size: 1.6rem; color: var(--text-heading); margin: 2.5rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-weight: 700; }
+        h3 { font-size: 1.2rem; color: var(--primary); margin: 1.8rem 0 0.8rem; font-weight: 600; }
+        h4 { font-size: 1rem; color: var(--accent); margin: 1.2rem 0 0.5rem; font-weight: 600; }
+        p { margin-bottom: 1rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        strong { color: var(--text-heading); }
+        em { color: var(--text-muted); font-style: italic; }
+
+        /* Lists */
+        ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+        li { margin-bottom: 0.4rem; }
+        li::marker { color: var(--primary); }
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        th { background: var(--primary-dark); color: #fff; padding: 0.7rem 0.8rem; text-align: left; font-weight: 600; }
+        td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border); }
+        tr:nth-child(even) td { background: rgba(99,102,241,0.04); }
+        /* Code */
+        code { background: var(--bg-code); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+        pre { background: var(--bg-code); padding: 1.2rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0 1.5rem; font-size: 0.82rem; line-height: 1.5; }
+        pre code { background: none; padding: 0; }
+        /* Cards / Callouts */
+        .callout { background: var(--bg-card); border-left: 4px solid var(--primary); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1.2rem 0; }
+        .callout.tip { border-left-color: var(--success); }
+        .callout.warning { border-left-color: var(--warning); }
+        .callout.danger { border-left-color: var(--danger); }
+        .callout strong { display: block; margin-bottom: 0.3rem; }
+        /* Badges */
+        .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.72rem; font-weight: 600; margin: 0 0.3rem; }
+        .badge-green { background: rgba(34,197,94,0.15); color: var(--success); }
+        .badge-blue { background: rgba(59,130,246,0.15); color: var(--info); }
+        .badge-purple { background: rgba(99,102,241,0.15); color: var(--primary); }
+        .badge-orange { background: rgba(245,158,11,0.15); color: var(--accent); }
+        .badge-red { background: rgba(239,68,68,0.15); color: var(--danger); }
+        /* Checklist */
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li { padding: 0.3rem 0; padding-left: 1.5rem; position: relative; }
+        .checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--text-muted); }
+        /* Section */
+        section { margin-bottom: 3rem; }
+        .phase-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.3rem; flex-wrap: wrap; }
+        /* Diagram */
+        .diagram { background: var(--bg-code); padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin: 1.5rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.4; white-space: pre; }
+        /* Back to top */
+        .back-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--primary); color: #fff; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; opacity: 0.8; z-index: 50; }
+        .back-top:hover { opacity: 1; }
+        /* Print */
+        @media print {
+            .sidebar, .menu-toggle, .back-top { display: none !important; }
+            .main { margin-left: 0; max-width: 100%; padding: 1rem; }
+            body { background: #fff; color: #1a1a1a; }
+            h1,h2,h3,h4,strong { color: #1a1a1a; }
+            table, th, td { border: 1px solid #ccc; }
+            th { background: #f0f0f0; color: #1a1a1a; }
+            a { color: #4f46e5; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Mobile Menu Toggle -->
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button>
+
+<!-- Sidebar Navigation -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <h2>🚀 AI Engineer Roadmap</h2>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.3rem;">Beginner → Advanced (2026)</p>
+    </div>
+    <nav>
+        <div class="nav-section">Overview</div>
+        <a href="#home">Home & Learning Path</a>
+        <a href="#overview">12-Phase Overview</a>
+        <a href="#2026">What Makes 2026 Different</a>
+        <div class="nav-section">The Phases</div>
+        <a href="#phase0">Phase 0: Prerequisites</a>
+        <a href="#phase1">Phase 1: Programming</a>
+        <a href="#phase2">Phase 2: Mathematics</a>
+        <a href="#phase3">Phase 3: Machine Learning</a>
+        <a href="#phase4">Phase 4: Deep Learning</a>
+        <a href="#phase5">Phase 5: Generative AI</a>
+        <a href="#phase6">Phase 6: Prompt Engineering</a>
+        <a href="#phase7">Phase 7: RAG Systems</a>
+        <a href="#phase8">Phase 8: Agentic AI</a>
+        <a href="#phase9">Phase 9: Fine-Tuning</a>
+        <a href="#phase10">Phase 10: Custom Models</a>
+        <a href="#phase11">Phase 11: MLOps</a>
+        <a href="#phase12">Phase 12: Advanced</a>
+        <div class="nav-section">Plans & Career</div>
+        <a href="#timelines">Timelines</a>
+        <a href="#weekly">Weekly Study Plan</a>
+        <a href="#projects">75 Projects</a>
+        <a href="#jobs">Job Roadmaps</a>
+        <a href="#skills">80/20 Skills & Interview</a>
+        <a href="#certs">Certifications & Portfolio</a>
+        <a href="#progress">Progress Tracking</a>
+        <a href="#resources">Resource Library</a>
+    </nav>
+</aside>
+
+<!-- Back to Top Button -->
+<button class="back-top" onclick="window.scrollTo({top:0})" title="Back to top">↑</button>
+
+<!-- Main Content -->
+<main class="main">
+
+<!-- ==================== HOME ==================== -->
+<section id="home">
+    <h1>🚀 AI Engineer Roadmap</h1>
+    <p style="font-size:1.1rem;color:var(--text-muted);margin-bottom:1.5rem;">From Java/Software Engineer to GenAI Expert — A Complete, Industry-Level Roadmap (2026)</p>
+    <p><span class="badge badge-green">Living Document</span> <span class="badge badge-blue">Beginner to Advanced</span> <span class="badge badge-orange">Industry & Job Ready</span> <span class="badge badge-purple">Updated 2026</span></p>
+
+    <div class="callout tip">
+        <strong>💡 How to use this roadmap</strong>
+        This is a <strong>living curriculum</strong>, not a reading list. Work top-to-bottom, <strong>build while you learn</strong>, and track your progress using the checklists below. Golden rule: <em>Ship a project at the end of every phase.</em> Theory without shipped artifacts will not get you hired.
+    </div>
+
+    <h3>🧭 How to Use This Roadmap</h3>
+    <ol>
+        <li><strong>You are a Junior Software Engineer</strong> — you already know how to code, use Git, debug, and read docs. That is a <em>huge</em> head start.</li>
+        <li><strong>Pick a timeline</strong> from the <a href="#timelines">Timelines</a> section. The recommended fast track is <strong>6 months to job-ready</strong> at 20 hrs/week.</li>
+        <li><strong>Follow the <a href="#weekly">Weekly Study Plan</a></strong> — it sequences phases for the fastest path to employability.</li>
+        <li><strong>Build relentlessly.</strong> Every phase ends with a portfolio project. Push everything to GitHub.</li>
+        <li><strong>Track progress</strong> with the checklists in <a href="#progress">Progress Tracking</a>.</li>
+    </ol>
+
+    <div class="callout warning">
+        <strong>⚡ The Fastest Path</strong>
+        The fastest path to an AI Engineering job in 2026 is NOT mastering math first. It's becoming dangerous with LLM APIs, RAG, and agents quickly, <em>then</em> backfilling fundamentals. This roadmap is sequenced for that reality.
+    </div>
+
+    <h3>🗺️ The Big Picture — Learning Path Diagram</h3>
+    <div class="diagram">                          ┌───────────────────────────────────────────────┐
+                          │   PHASE 0: PREREQUISITES (mindset, tools, git)  │
+                          └───────────────────────┬───────────────────────┘
+                                                  │
+                  ┌───────────────────────────────┼───────────────────────────────┐
+                  ▼                               ▼                               ▼
+        ┌──────────────────┐          ┌──────────────────────┐         ┌────────────────────┐
+        │ PHASE 1          │          │ PHASE 2              │         │  (parallel track)  │
+        │ Programming      │          │ Mathematics for AI   │         │  Start using LLM   │
+        │ Python+DSA+SQL   │          │ LinAlg/Calc/Stats    │         │  APIs from week 1  │
+        └────────┬─────────┘          └───────────┬──────────┘         └─────────┬──────────┘
+                 └──────────────┬─────────────────┘                              │
+                                ▼                                                │
+                    ┌────────────────────────┐                                  │
+                    │ PHASE 3: MACHINE        │                                  │
+                    │ LEARNING (scikit-learn) │                                  │
+                    └───────────┬────────────┘                                  │
+                                ▼                                                │
+                    ┌────────────────────────┐                                  │
+                    │ PHASE 4: DEEP LEARNING  │                                  │
+                    │ PyTorch / TensorFlow    │                                  │
+                    └───────────┬────────────┘                                  │
+                                ▼                                                │
+                    ┌────────────────────────┐                                  │
+                    │ PHASE 5: GENERATIVE AI  │◄─────────────────────────────────┘
+                    │ Transformers / LLMs     │
+                    └───────────┬────────────┘
+                                ▼
+        ┌───────────────────────────────────────────────────────────┐
+        │  THE APPLIED GENAI CORE (highest job demand in 2026)      │
+        │                                                           │
+        │  PHASE 6 Prompt Eng → PHASE 7 RAG → PHASE 8 Agentic AI   │
+        └───────────────────────────────┬───────────────────────────┘
+                                        ▼
+        ┌───────────────────────────────────────────────────────────┐
+        │  THE MODEL BUILDER TRACK (deep specialization)            │
+        │                                                           │
+        │  PHASE 9 Fine-Tuning → PHASE 10 Custom Models             │
+        └───────────────────────────────┬───────────────────────────┘
+                                        ▼
+        ┌───────────────────────────────────────────────────────────┐
+        │  PHASE 11 MLOps → PHASE 12 Advanced System Design         │
+        └───────────────────────────────────────────────────────────┘</div>
+
+    <h3>Dependency Cheat Sheet</h3>
+    <ul>
+        <li><strong>Phases 1 &amp; 2</strong> can run in parallel. Don't let math block you.</li>
+        <li><strong>You can start Phases 5–7 (GenAI/Prompting/RAG) with Python alone</strong> — the fast track to job-readiness.</li>
+        <li><strong>Phases 9 &amp; 10</strong> require Phase 4 (Deep Learning) and Phase 2 (Math).</li>
+        <li><strong>Phase 11 (MLOps)</strong> leverages your existing software engineering skills the most.</li>
+    </ul>
+</section>
+
+<!-- ==================== OVERVIEW ==================== -->
+<section id="overview">
+    <h2>🔭 The 12-Phase Overview</h2>
+    <table>
+        <thead><tr><th>Phase</th><th>Theme</th><th>Core Outcome</th><th>Est. Time (20h/wk)</th></tr></thead>
+        <tbody>
+            <tr><td>0</td><td>Prerequisites</td><td>Environment, mindset, Git, Linux, the AI landscape</td><td>1 week</td></tr>
+            <tr><td>1</td><td>Programming Foundations</td><td>Python mastery, DSA-for-AI, SQL</td><td>3–4 weeks</td></tr>
+            <tr><td>2</td><td>Mathematics for AI</td><td>LinAlg, Calculus, Probability, Statistics</td><td>3–4 weeks (parallel)</td></tr>
+            <tr><td>3</td><td>Machine Learning</td><td>Classical ML, scikit-learn, end-to-end pipelines</td><td>4 weeks</td></tr>
+            <tr><td>4</td><td>Deep Learning</td><td>Neural nets, PyTorch, TensorFlow, CNN/RNN/Transformers</td><td>5 weeks</td></tr>
+            <tr><td>5</td><td>Generative AI</td><td>Transformers deep dive, LLMs, embeddings, diffusion</td><td>3 weeks</td></tr>
+            <tr><td>6</td><td>Prompt Engineering</td><td>Reliable prompting, structured output, eval</td><td>1–2 weeks</td></tr>
+            <tr><td>7</td><td>RAG Systems</td><td>Production retrieval pipelines, vector DBs, eval</td><td>3 weeks</td></tr>
+            <tr><td>8</td><td>Agentic AI</td><td>Single/multi-agent, tools, memory, MCP, LangGraph</td><td>4 weeks</td></tr>
+            <tr><td>9</td><td>Fine-Tuning</td><td>LoRA, QLoRA, RLHF/DPO, dataset curation</td><td>3 weeks</td></tr>
+            <tr><td>10</td><td>Custom Models</td><td>Tokenization, pre-training, build a small LLM</td><td>3 weeks</td></tr>
+            <tr><td>11</td><td>MLOps &amp; Deployment</td><td>Serving, vLLM, monitoring, CI/CD, cost</td><td>3 weeks</td></tr>
+            <tr><td>12</td><td>Advanced Engineering</td><td>System design, scaling, safety, evals at scale</td><td>Ongoing</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ==================== 2026 TRENDS ==================== -->
+<section id="2026">
+    <h2>🌟 What Makes 2026 Different</h2>
+    <ol>
+        <li><strong>Agents went to production.</strong> Companies hire for reliable agentic systems — planning, tool use, memory, and <strong>MCP (Model Context Protocol)</strong> as the standard integration layer.</li>
+        <li><strong>RAG matured into "context engineering."</strong> Hybrid search, reranking, structured retrieval, and rigorous evaluation separate juniors from seniors.</li>
+        <li><strong>Open models are competitive.</strong> Llama, Qwen, Mistral, DeepSeek, Gemma mean <strong>local LLMs (Ollama)</strong> and <strong>efficient serving (vLLM)</strong> are core skills.</li>
+        <li><strong>Reasoning models &amp; test-time compute</strong> changed prompting and cost trade-offs.</li>
+        <li><strong>Evals are the new unit tests.</strong> LLM-as-judge, golden datasets, and frameworks (Ragas, DeepEval, OpenAI Evals, LangSmith) are hiring differentiators.</li>
+        <li><strong>Fine-tuning got cheap</strong> via LoRA/QLoRA — small specialized models beat giant general ones for many tasks.</li>
+        <li><strong>Cost &amp; latency engineering</strong> (quantization, caching, routing, distillation) is a first-class concern.</li>
+    </ol>
+</section>
+
+<!-- ==================== PHASE 0 ==================== -->
+<section id="phase0">
+    <div class="phase-header">
+        <h2>Phase 0 — Prerequisites</h2>
+        <span class="badge badge-green">~1 week</span>
+    </div>
+    <p><strong>Goal:</strong> Set up your environment, mindset, and mental model of the AI landscape.</p>
+
+    <h3>🎯 Learning Objectives</h3>
+    <ul>
+        <li>Build a reliable local + cloud dev environment for AI work.</li>
+        <li>Understand the map of AI: AI ⊃ ML ⊃ DL ⊃ GenAI ⊃ LLMs, and where "AI Engineer" sits.</li>
+        <li>Get your first LLM API call working <strong>today</strong>.</li>
+        <li>Adopt the habits (Git, notebooks, reproducibility) that prevent pain later.</li>
+    </ul>
+
+    <h3>📚 Topics</h3>
+    <ul>
+        <li><strong>The AI landscape &amp; terminology</strong> — AI vs ML vs DL vs GenAI; model vs API vs framework; training vs inference; tokens, context window, embeddings.</li>
+        <li><strong>Roles</strong> — AI Engineer vs ML Engineer vs Data Scientist vs MLOps vs Research Scientist.</li>
+        <li><strong>Dev environment</strong> — Python via pyenv/uv, virtual environments, VS Code/Cursor, Jupyter, Git/GitHub.</li>
+        <li><strong>Command line &amp; Linux basics</strong> — shell, pipes, env vars, ssh, tmux.</li>
+        <li><strong>Cloud &amp; compute basics</strong> — CPU vs GPU vs TPU, Google Colab/Kaggle free GPUs.</li>
+        <li><strong>API keys &amp; secrets hygiene</strong> — .env, never commit keys, billing limits.</li>
+    </ul>
+
+    <h3>✅ Setup Checklist</h3>
+    <ul class="checklist">
+        <li>Install Python 3.11+ (use uv or pyenv)</li>
+        <li>GitHub account + SSH keys</li>
+        <li>VS Code (or Cursor) + Python + Jupyter extensions</li>
+        <li>Accounts: OpenAI, Anthropic, Hugging Face, Google Colab, Kaggle</li>
+        <li>Install Ollama and run a local LLM</li>
+        <li>Create a .env workflow with python-dotenv</li>
+    </ul>
+
+    <h3>🛠️ Mini Project</h3>
+    <p><strong>"LLM Hello World" CLI</strong> — a Python CLI that takes a prompt and routes it to OpenAI, Anthropic, <em>or</em> a local Ollama model based on a <code>--provider</code> flag, prints latency + token usage.</p>
+
+    <h3>📦 Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free Course</td><td>Elements of AI (U. Helsinki); Google "Intro to Generative AI"</td></tr>
+            <tr><td>YouTube</td><td>3Blue1Brown, Andrej Karpathy, Fireship</td></tr>
+            <tr><td>Docs</td><td>OpenAI docs, Anthropic docs, Hugging Face docs, Ollama docs</td></tr>
+            <tr><td>GitHub</td><td>ollama/ollama, openai/openai-cookbook, anthropics/anthropic-cookbook</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        You can call cloud + local LLMs from Python, manage secrets safely, and explain what an AI Engineer does.
+    </div>
+</section>
+
+<!-- ==================== PHASE 1 ==================== -->
+<section id="phase1">
+    <div class="phase-header">
+        <h2>Phase 1 — Programming Foundations</h2>
+        <span class="badge badge-green">~3–4 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Professional Python fluency for AI, the DSA that matters, and SQL for an AI Engineer.</p>
+
+    <h3>🐍 The Python Roadmap (for AI)</h3>
+    <h4>1. Core Python (fast for a Java dev)</h4>
+    <ul>
+        <li>Types, f-strings, slicing, comprehensions (list/dict/set/generator)</li>
+        <li>Functions, *args/**kwargs, lambdas, Pythonic idioms</li>
+        <li>OOP: dataclasses, @property, dunder methods, Enum</li>
+        <li><strong>Type hints</strong> + mypy/pyright</li>
+        <li>Errors, logging (not print), pathlib</li>
+    </ul>
+    <h4>2. Intermediate Python</h4>
+    <ul>
+        <li>Iterators, generators, yield, lazy evaluation</li>
+        <li>Decorators &amp; closures; functools (lru_cache, partial)</li>
+        <li><strong>asyncio</strong> (critical for LLM API calls)</li>
+        <li>Virtual environments &amp; packaging with <strong>uv</strong>, pyproject.toml</li>
+        <li>Testing with <strong>pytest</strong>; linting with <strong>ruff</strong> + black</li>
+    </ul>
+    <h4>3. Scientific &amp; Data Stack</h4>
+    <ul>
+        <li><strong>NumPy</strong> — ndarrays, broadcasting, vectorization</li>
+        <li><strong>Pandas</strong> — DataFrames, groupby, merge, time series</li>
+        <li>Matplotlib / Seaborn / Plotly — visualization</li>
+        <li>Jupyter, Polars (modern fast alternative)</li>
+    </ul>
+    <h4>4. AI-Engineering-Specific Python</h4>
+    <ul>
+        <li>HTTP &amp; APIs: requests, httpx (async), <strong>pydantic</strong> (v2)</li>
+        <li>Building APIs: <strong>FastAPI</strong></li>
+        <li>Files: JSON, CSV, Parquet, PDF parsing</li>
+    </ul>
+
+    <h3>🧮 Data Structures &amp; Algorithms for AI</h3>
+    <table>
+        <thead><tr><th>Structure</th><th>Why in AI</th></tr></thead>
+        <tbody>
+            <tr><td>Arrays / NumPy arrays</td><td>Tensors, batches, embeddings</td></tr>
+            <tr><td>Hash maps / Dicts</td><td>Caching, vocab/token maps</td></tr>
+            <tr><td>Heaps / Priority Queues</td><td>Top-k retrieval, beam search</td></tr>
+            <tr><td>Trees / Tries</td><td>Tokenizers, parsing, KD-trees</td></tr>
+            <tr><td>Graphs</td><td>Knowledge graphs, LangGraph workflows</td></tr>
+            <tr><td>Vectors &amp; similarity</td><td>Cosine/dot-product = heart of RAG</td></tr>
+        </tbody>
+    </table>
+
+    <h3>🗄️ SQL for AI Engineers</h3>
+    <ul>
+        <li>SELECT, WHERE, JOINs, GROUP BY, CTEs, window functions</li>
+        <li>Indexes, EXPLAIN, pd.read_sql, SQLite/Postgres</li>
+        <li><strong>pgvector</strong> — Postgres extension for vector similarity (bridges to RAG)</li>
+        <li>DuckDB for local OLAP</li>
+    </ul>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"DataOps Toolkit"</strong> — a tested Python package (pyproject.toml, pytest, CI) that ingests messy CSV/JSON/PDF, cleans with Pandas, stores in SQLite/Postgres, exposes a FastAPI endpoint.</p>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free</td><td>CS50P (Harvard); Kaggle Learn: Python, Pandas, SQL; freeCodeCamp</td></tr>
+            <tr><td>Books</td><td>Fluent Python (Ramalho); Effective Pandas (Harrison)</td></tr>
+            <tr><td>YouTube</td><td>Corey Schafer, ArjanCodes, mCoding</td></tr>
+            <tr><td>Docs</td><td>Python docs, NumPy, Pandas, FastAPI, Pydantic, uv</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        You write typed, tested, idiomatic Python; wrangle data with NumPy/Pandas and SQL; build &amp; serve APIs; and shipped a packaged toolkit.
+    </div>
+</section>
+
+<!-- ==================== PHASE 2 ==================== -->
+<section id="phase2">
+    <div class="phase-header">
+        <h2>Phase 2 — Mathematics for AI</h2>
+        <span class="badge badge-blue">~3–4 weeks (parallel)</span>
+    </div>
+    <p><strong>Goal:</strong> Build <em>just enough</em> math intuition to understand, debug, and innovate on ML/DL. Emphasis on intuition + code, not proofs.</p>
+
+    <div class="callout warning">
+        <strong>⚠️ Pacing advice</strong>
+        If your goal is applied GenAI/RAG/agents jobs, learn the intuition here and move on — don't rabbit-hole. Come back for depth when you hit Phases 4, 9, 10.
+    </div>
+
+    <h3>📐 Linear Algebra (most important)</h3>
+    <ul>
+        <li>Vectors, matrices, <strong>tensors</strong>; shapes &amp; broadcasting</li>
+        <li>Dot product, norms, <strong>cosine similarity</strong></li>
+        <li>Matrix multiplication (the #1 beginner bug: shape mismatch)</li>
+        <li>Eigenvalues/eigenvectors, <strong>SVD</strong>, PCA</li>
+    </ul>
+    <p><em>Why:</em> A neural net layer is <code>y = Wx + b</code>. Embeddings are vectors; retrieval is vector similarity. Attention is scaled dot-products.</p>
+
+    <h3>📈 Calculus</h3>
+    <ul>
+        <li>Derivatives, partial derivatives, <strong>gradients</strong></li>
+        <li><strong>Chain rule = backpropagation</strong></li>
+        <li>Gradient descent &amp; variants (SGD, momentum, Adam)</li>
+    </ul>
+    <p><em>Why:</em> Training = minimizing a loss by following its gradient. Backprop is the chain rule across layers.</p>
+
+    <h3>🎲 Probability</h3>
+    <ul>
+        <li>Bayes' theorem, distributions (Gaussian, Bernoulli, Categorical)</li>
+        <li>Expectation, variance, MLE, cross-entropy</li>
+        <li><strong>Softmax &amp; temperature</strong> (how LLMs pick the next token!), KL divergence</li>
+    </ul>
+
+    <h3>📊 Statistics</h3>
+    <ul>
+        <li>Descriptive stats, distributions, correlation vs causation</li>
+        <li>Central Limit Theorem, confidence intervals</li>
+        <li>Hypothesis testing, <strong>A/B testing</strong>, bias/variance trade-off</li>
+    </ul>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"Linear &amp; Logistic Regression from Scratch"</strong> — implement both in pure NumPy (forward pass, loss, gradients, training loop). Compare to scikit-learn.</p>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free (essential)</td><td><strong>3Blue1Brown</strong> — "Essence of Linear Algebra" &amp; "Essence of Calculus"</td></tr>
+            <tr><td>Free</td><td>Khan Academy; StatQuest; Imperial "Math for ML" (Coursera audit)</td></tr>
+            <tr><td>Books (free)</td><td>Mathematics for Machine Learning (mml-book.github.io); ISLP; Think Stats/Bayes</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        You can read a model equation and explain each symbol; you implemented core math in NumPy; you built linear/logistic regression from scratch.
+    </div>
+</section>
+
+<!-- ==================== PHASE 3 ==================== -->
+<section id="phase3">
+    <div class="phase-header">
+        <h2>Phase 3 — Machine Learning</h2>
+        <span class="badge badge-blue">~4 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Master classical ML end-to-end: framing problems, features, training/evaluating, and shipping a full pipeline with scikit-learn.</p>
+
+    <h3>📚 Topics</h3>
+    <ul>
+        <li>Supervised vs unsupervised vs RL; train/val/test; <strong>data leakage</strong></li>
+        <li>Bias–variance trade-off; regularization (L1/L2)</li>
+        <li><strong>Regression:</strong> Linear, Ridge, Lasso, ElasticNet</li>
+        <li><strong>Classification:</strong> Logistic, k-NN, SVM, Naive Bayes</li>
+        <li><strong>Trees → Random Forests → XGBoost/LightGBM/CatBoost</strong> (tabular workhorses)</li>
+        <li><strong>Clustering:</strong> k-Means, DBSCAN; <strong>Dimensionality:</strong> PCA, t-SNE, UMAP</li>
+        <li>Feature engineering, encoding, scaling, missing data</li>
+        <li>Hyperparameter tuning: <strong>Optuna</strong>; ensembling; experiment tracking (MLflow/W&amp;B)</li>
+        <li>Metrics: precision/recall/F1, ROC-AUC, confusion matrix</li>
+    </ul>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"End-to-End ML Service"</strong> — leakage-free pipeline, Optuna tuning, MLflow tracking, <strong>FastAPI</strong> endpoint, Docker container, SHAP explanations.</p>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free</td><td>Andrew Ng "ML Specialization" (audit); Kaggle Learn; StatQuest</td></tr>
+            <tr><td>Books</td><td>Hands-On ML (Géron) Part I; ISLP (free)</td></tr>
+            <tr><td>Docs</td><td>scikit-learn, XGBoost, Optuna, MLflow, SHAP</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        Raw dataset → tuned, validated, deployed model in a leakage-free pipeline, explained with SHAP, served via API.
+    </div>
+</section>
+
+<!-- ==================== PHASE 4 ==================== -->
+<section id="phase4">
+    <div class="phase-header">
+        <h2>Phase 4 — Deep Learning</h2>
+        <span class="badge badge-blue">~5 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Understand neural networks deeply. Become fluent in <strong>PyTorch</strong> (primary) and TensorFlow/Keras (secondary), through to the <strong>Transformer</strong>.</p>
+
+    <h3>📚 Topics</h3>
+    <ul>
+        <li>Perceptron → MLP; activations (ReLU, GELU, softmax); loss functions</li>
+        <li><strong>Backpropagation</strong> + autograd; optimizers (Adam/AdamW); LR schedules</li>
+        <li>Initialization, normalization (batch/layer), dropout, weight decay</li>
+        <li><strong>PyTorch:</strong> Tensors, nn.Module, Dataset/DataLoader, GPU, mixed precision, Lightning</li>
+        <li>TensorFlow/Keras: Sequential/Functional API, tf.data, TensorBoard</li>
+        <li><strong>CNNs</strong> — convolution, pooling, ResNet, transfer learning</li>
+        <li><strong>RNNs/LSTM</strong> — sequences, limitations</li>
+        <li><strong>The Transformer</strong> — self-attention, multi-head, positional encodings, residuals, layer norm</li>
+        <li>Transfer learning &amp; fine-tuning; experiment tracking (W&amp;B)</li>
+    </ul>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"Vision Transformer Fine-Tuner"</strong> — fine-tune a pretrained model with PyTorch Lightning, W&amp;B logging, exported model, inference API + Gradio demo.</p>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free (essential)</td><td><strong>Andrej Karpathy "Neural Networks: Zero to Hero"</strong>; fast.ai; MIT 6.S191</td></tr>
+            <tr><td>Free</td><td>Andrew Ng "DL Specialization" (audit); 3Blue1Brown NN series</td></tr>
+            <tr><td>Books</td><td>Hands-On ML Part II; Deep Learning with PyTorch; Dive into DL (d2l.ai, free)</td></tr>
+            <tr><td>GitHub</td><td>karpathy/nn-zero-to-hero, karpathy/micrograd, d2l-ai/d2l-en</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        Build/train/debug neural nets in PyTorch, use transfer learning on a GPU, implement self-attention from scratch, explain the Transformer block-by-block.
+    </div>
+</section>
+
+<!-- ==================== PHASE 5 ==================== -->
+<section id="phase5">
+    <div class="phase-header">
+        <h2>Phase 5 — Generative AI</h2>
+        <span class="badge badge-purple">~3 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Understand how modern generative models (LLMs) work, and become productive with Hugging Face, embeddings, and model providers.</p>
+
+    <h3>📚 Topics</h3>
+    <h4>How LLMs Work</h4>
+    <ul>
+        <li>Decoder-only Transformers; <strong>tokenization</strong> (BPE, WordPiece)</li>
+        <li>Pretraining → instruction tuning (SFT) → alignment (RLHF/DPO)</li>
+        <li><strong>Decoding:</strong> temperature, top-k, top-p, repetition penalty, stop sequences</li>
+        <li>Context windows, KV cache, reasoning models &amp; test-time compute</li>
+    </ul>
+    <h4>Embeddings</h4>
+    <ul>
+        <li>Text embedding models (OpenAI, BGE, E5, Nomic, Jina); MTEB leaderboard</li>
+        <li>Cosine similarity; multimodal embeddings (CLIP)</li>
+    </ul>
+    <h4>Hugging Face Ecosystem</h4>
+    <ul>
+        <li>Transformers (pipeline, AutoModel), Datasets, Hub, Accelerate, Gradio</li>
+    </ul>
+    <h4>Model Providers</h4>
+    <ul>
+        <li><strong>OpenAI APIs</strong> (Chat, embeddings, structured outputs, tool calling, vision)</li>
+        <li><strong>Anthropic APIs</strong> (Messages, tool use, long context, prompt caching)</li>
+        <li><strong>Local LLMs:</strong> Ollama (easy local), <strong>vLLM</strong> (high-throughput serving)</li>
+        <li>Open models: Llama, Qwen, Mistral, Gemma, DeepSeek, Phi</li>
+    </ul>
+    <h4>Other Modalities</h4>
+    <ul>
+        <li>Diffusion models (Stable Diffusion, FLUX); Whisper (speech); multimodal LLMs</li>
+    </ul>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"GenAI Playground"</strong> — Streamlit/Gradio app unifying: chat across providers, semantic search, image generation, and a live token/cost dashboard.</p>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free (essential)</td><td>Hugging Face LLM Course; Andrej Karpathy "Intro/Deep Dive into LLMs"</td></tr>
+            <tr><td>Free</td><td>DeepLearning.AI short courses; Cohere LLM University</td></tr>
+            <tr><td>Books</td><td>Hands-On Large Language Models (Alammar &amp; Grootendorst); NLP with Transformers (HF authors)</td></tr>
+            <tr><td>YouTube</td><td>Andrej Karpathy, Jay Alammar, Sebastian Raschka, Umar Jamil</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        You explain how an LLM generates text, use embeddings for semantic search, run open + closed + local models, get structured output, and generate images.
+    </div>
+</section>
+
+<!-- ==================== PHASE 6 ==================== -->
+<section id="phase6">
+    <div class="phase-header">
+        <h2>Phase 6 — Prompt Engineering</h2>
+        <span class="badge badge-purple">~1–2 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Get reliable, structured, evaluable behavior out of LLMs. Move beyond "tips" to <em>engineering</em> prompts you can test and version.</p>
+
+    <h3>📚 Topics</h3>
+    <h4>Fundamentals</h4>
+    <ul>
+        <li>System/developer/user roles; instructions, context, examples, output format</li>
+        <li>Zero-shot, <strong>few-shot</strong>, <strong>Chain-of-Thought (CoT)</strong></li>
+        <li>Role/persona prompting; specificity &amp; delimiters</li>
+    </ul>
+    <h4>Advanced Techniques</h4>
+    <ul>
+        <li>Self-consistency, <strong>ReAct</strong>, Reflexion/self-critique</li>
+        <li>Prompt chaining &amp; task decomposition; meta-prompting; <strong>DSPy</strong></li>
+        <li>Reasoning-model prompting (less hand-holding)</li>
+    </ul>
+    <h4>Reliability &amp; Production</h4>
+    <ul>
+        <li><strong>Structured outputs:</strong> JSON Schema, Pydantic, <strong>Instructor</strong>, Outlines</li>
+        <li><strong>Function/tool calling</strong> schemas (bridge to agents)</li>
+        <li>Guardrails: input/output validation, <strong>prompt-injection</strong> defense</li>
+        <li>Prompt caching, determinism, versioning &amp; templating</li>
+    </ul>
+    <h4>Evaluation (critical)</h4>
+    <ul>
+        <li>Golden datasets, <strong>LLM-as-a-judge</strong>, regression testing in CI</li>
+        <li>Tools: <strong>promptfoo</strong>, LangSmith, OpenAI Evals</li>
+    </ul>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"Prompt Engineering Lab"</strong> — framework storing versioned prompt templates, running them against a golden dataset across providers, scoring with LLM-as-judge + rules, outputting comparison reports.</p>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free</td><td>DeepLearning.AI "ChatGPT Prompt Eng for Devs"; Anthropic tutorial; promptingguide.ai</td></tr>
+            <tr><td>Docs</td><td>OpenAI Structured Outputs; Anthropic Prompt Engineering; Instructor; promptfoo; DSPy</td></tr>
+            <tr><td>GitHub</td><td>dair-ai/Prompt-Engineering-Guide, jxnl/instructor, stanfordnlp/dspy, promptfoo/promptfoo</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        You force reliable structured output, choose techniques deliberately, defend against injection, and evaluate prompts against a golden set in CI.
+    </div>
+</section>
+
+<!-- ==================== PHASE 7 ==================== -->
+<section id="phase7">
+    <div class="phase-header">
+        <h2>Phase 7 — RAG Systems</h2>
+        <span class="badge badge-orange">~3 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Build <strong>production-grade</strong> RAG — not a toy demo, but a hybrid, reranked, evaluated, monitored pipeline. The #1 applied GenAI skill in 2026.</p>
+
+    <h3>🏛️ RAG Architecture</h3>
+    <div class="diagram">   INGESTION (offline):
+   Raw docs → Loaders → Cleaning → CHUNKING → EMBEDDING → Vector Store (+metadata +keyword index)
+
+   QUERY (online):
+   User query → Query Transform (rewrite/HyDE/multi-query)
+     → RETRIEVAL (vector + keyword = HYBRID)
+       → Top-N → RERANKER (cross-encoder) → Top-K
+         → Build PROMPT (context + citations)
+           → LLM → Answer + sources → GUARDRAILS → User
+                                              ↓
+                                   EVALUATION &amp; LOGGING</div>
+
+    <h3>📚 Topics</h3>
+    <table>
+        <thead><tr><th>Area</th><th>Key Concepts</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Indexing</strong></td><td>Loaders (PDF, web, DB), parsing, dedup, metadata extraction</td></tr>
+            <tr><td><strong>Chunking</strong></td><td>Fixed-size, recursive, <strong>semantic</strong>, sentence-window, proposition</td></tr>
+            <tr><td><strong>Embeddings</strong></td><td>MTEB choice, dimensionality, local vs API, Matryoshka, ColBERT</td></tr>
+            <tr><td><strong>Vector DBs</strong></td><td>pgvector, Qdrant, Weaviate, Chroma, Pinecone, FAISS; HNSW</td></tr>
+            <tr><td><strong>Retrieval</strong></td><td>Dense, sparse (BM25), <strong>hybrid (RRF)</strong>, query transforms, HyDE</td></tr>
+            <tr><td><strong>Reranking</strong></td><td>Cross-encoder (Cohere, BGE-reranker); MMR for diversity</td></tr>
+            <tr><td><strong>Generation</strong></td><td>Citations, context ordering, "I don't know", structured RAG output</td></tr>
+            <tr><td><strong>Evaluation</strong></td><td>Hit rate, MRR, NDCG; faithfulness, relevance; <strong>Ragas</strong>, DeepEval</td></tr>
+            <tr><td><strong>Production</strong></td><td>Caching, access control, multi-tenancy, injection defense, observability</td></tr>
+        </tbody>
+    </table>
+
+    <h3>🛠️ 5 Real-World RAG Projects</h3>
+    <table>
+        <thead><tr><th>#</th><th>Project</th><th>Key Skills</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td><strong>Chat with your PDFs</strong> — Q&amp;A with citations</td><td>Loaders, chunking, embeddings, vector store</td></tr>
+            <tr><td>2</td><td><strong>Documentation Assistant</strong> — RAG over product docs</td><td>Web/Markdown ingestion, incremental re-indexing, hybrid search</td></tr>
+            <tr><td>3</td><td><strong>Hybrid Search + Reranking Engine</strong></td><td>BM25+dense fusion (RRF), cross-encoder, benchmarks</td></tr>
+            <tr><td>4</td><td><strong>Evaluated Enterprise RAG</strong> — full Ragas/DeepEval harness + CI</td><td>Golden Q/A set, RAG triad metrics, regression testing</td></tr>
+            <tr><td>5</td><td><strong>Advanced/Agentic RAG</strong> — multi-hop, GraphRAG, multimodal</td><td>Query decomposition, routing, access control, observability</td></tr>
+        </tbody>
+    </table>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free</td><td>DeepLearning.AI "Building &amp; Evaluating Advanced RAG"; LangChain/LlamaIndex tutorials</td></tr>
+            <tr><td>Books</td><td>Hands-On LLMs (Alammar); LLM Engineer's Handbook (Iusztin &amp; Labonne)</td></tr>
+            <tr><td>YouTube</td><td>LlamaIndex, LangChain, Greg Kamradt, Sam Witteveen</td></tr>
+            <tr><td>Docs</td><td>LangChain RAG, LlamaIndex, Ragas, DeepEval, Qdrant, pgvector, Chroma</td></tr>
+            <tr><td>GitHub</td><td>NirDiamant/RAG_Techniques, explodinggradients/ragas, run-llama/llama_index</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        Hybrid, reranked RAG pipeline with proven quality (Ragas/DeepEval), production-hardened (access control, caching, injection defense, observability).
+    </div>
+</section>
+
+<!-- ==================== PHASE 8 ==================== -->
+<section id="phase8">
+    <div class="phase-header">
+        <h2>Phase 8 — Agentic AI &amp; Multi-Agent Systems</h2>
+        <span class="badge badge-orange">~4 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Build <strong>reliable</strong> AI agents and multi-agent systems — planning, tool use, memory, MCP — and production architectures. <em>The</em> defining hiring theme of 2026.</p>
+
+    <h3>📚 Topics</h3>
+    <table>
+        <thead><tr><th>Area</th><th>Key Concepts</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Foundations</strong></td><td>LLM + tools + loop + memory + goal; <strong>ReAct</strong>; agent vs workflow</td></tr>
+            <tr><td><strong>Tool Calling</strong></td><td>Schemas, execution, validation, retries, parallel calls</td></tr>
+            <tr><td><strong>Planning</strong></td><td>ReAct, Plan-and-Execute, Tree/Graph-of-Thoughts, reflection</td></tr>
+            <tr><td><strong>Memory</strong></td><td>Short-term (context), long-term (vector/entity); Mem0, Zep</td></tr>
+            <tr><td><strong>MCP</strong></td><td>Model Context Protocol — standard for tools/resources; servers &amp; clients</td></tr>
+            <tr><td><strong>Multi-Agent</strong></td><td>Supervisor/workers, hierarchical, group chat, debate</td></tr>
+            <tr><td><strong>Frameworks</strong></td><td><strong>LangGraph</strong>, CrewAI, AutoGen, OpenAI Agents SDK, Pydantic AI</td></tr>
+            <tr><td><strong>Production</strong></td><td>Guardrails, tracing (Langfuse), HITL, evals, security, cost limits</td></tr>
+        </tbody>
+    </table>
+
+    <h3>🛠️ 10 Real-World Agent Projects</h3>
+    <table>
+        <thead><tr><th>#</th><th>Project</th><th>Type</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>ReAct research assistant (web search + tools)</td><td>Single-agent</td></tr>
+            <tr><td>2</td><td>Personal MCP toolbox (build MCP server + client)</td><td>Single + MCP</td></tr>
+            <tr><td>3</td><td>Coding agent (reads repo, edits, runs tests)</td><td>Single-agent</td></tr>
+            <tr><td>4</td><td>SQL/data analyst agent (NL → SQL → charts)</td><td>Single-agent</td></tr>
+            <tr><td>5</td><td>Customer-support agent (RAG + ticketing + HITL)</td><td>Single-agent</td></tr>
+            <tr><td>6</td><td>LangGraph stateful workflow (checkpoints + HITL)</td><td>Graph agent</td></tr>
+            <tr><td>7</td><td>CrewAI content team (researcher→writer→editor)</td><td>Multi-agent</td></tr>
+            <tr><td>8</td><td>AutoGen problem-solving group chat</td><td>Multi-agent</td></tr>
+            <tr><td>9</td><td>Multi-agent "company" (supervisor + specialists)</td><td>Multi-agent</td></tr>
+            <tr><td>10</td><td>Production agent platform (tracing, evals, limits, deployed)</td><td>Production</td></tr>
+        </tbody>
+    </table>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free</td><td>HF "AI Agents Course"; DeepLearning.AI (LangGraph, crewAI, AutoGen, MCP courses); LangChain Academy</td></tr>
+            <tr><td>Docs</td><td>modelcontextprotocol.io; LangGraph; CrewAI; AutoGen; Langfuse</td></tr>
+            <tr><td>YouTube</td><td>AI Jason, Sam Witteveen, Cole Medin, Dave Ebbelaar, LangChain</td></tr>
+            <tr><td>GitHub</td><td>modelcontextprotocol/servers, langchain-ai/langgraph, crewAIInc/crewAI, microsoft/autogen</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        Single- and multi-agent systems with tools, memory, planning, MCP; orchestrated in LangGraph/CrewAI/AutoGen; hardened with tracing, evals, guardrails, HITL.
+    </div>
+</section>
+
+<!-- ==================== PHASE 9 ==================== -->
+<section id="phase9">
+    <div class="phase-header">
+        <h2>Phase 9 — Fine-Tuning LLMs</h2>
+        <span class="badge badge-red">~3 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Adapt open models efficiently — LoRA, QLoRA, DPO/RLHF — and know when <em>not</em> to fine-tune.</p>
+
+    <h3>📚 Topics</h3>
+    <ul>
+        <li><strong>Decision tree:</strong> Prompting fixes <em>instructions</em>; RAG fixes <em>knowledge</em>; Fine-tuning fixes <em>behavior/format/style/skill</em></li>
+        <li><strong>Data curation:</strong> Synthetic generation, cleaning, dedup, formatting; quality &gt; quantity</li>
+        <li><strong>SFT + PEFT:</strong> LoRA (low-rank adapters), <strong>QLoRA</strong> (4-bit base + LoRA on consumer GPU)</li>
+        <li><strong>Tools:</strong> HF PEFT + TRL (SFTTrainer), <strong>Unsloth</strong> (2× faster), Axolotl, bitsandbytes</li>
+        <li><strong>Preference alignment:</strong> RLHF (SFT → reward model → PPO), <strong>DPO</strong> (simpler, no RM), ORPO, KTO, GRPO</li>
+        <li><strong>RL foundations:</strong> Agent/env/state/action/reward/policy; PPO intuition for RLHF/GRPO</li>
+        <li><strong>Evaluation:</strong> Held-out eval, LLM-as-judge vs base, catastrophic forgetting, reward hacking</li>
+    </ul>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"Fine-Tuning Pipeline + Model Card"</strong> — dataset curation (with synthetic data), QLoRA SFT, optional DPO, rigorous eval vs base, adapter published to HF Hub with a proper model card.</p>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free</td><td>DeepLearning.AI "Finetuning LLMs" &amp; "RLHF"; HF TRL guides; Unsloth notebooks; Maxime Labonne llm-course</td></tr>
+            <tr><td>Books</td><td>LLM Engineer's Handbook (Iusztin &amp; Labonne); Hands-On LLMs</td></tr>
+            <tr><td>YouTube</td><td>Sebastian Raschka, Maxime Labonne, Trelis Research, Umar Jamil</td></tr>
+            <tr><td>GitHub</td><td>huggingface/peft, huggingface/trl, unslothai/unsloth, axolotl-ai-cloud/axolotl, mlabonne/llm-course</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        Decide when to fine-tune, curate a dataset, run QLoRA SFT + DPO on a budget GPU, evaluate vs base, publish a model card.
+    </div>
+</section>
+
+<!-- ==================== PHASE 10 ==================== -->
+<section id="phase10">
+    <div class="phase-header">
+        <h2>Phase 10 — Building Custom Models (LLM from Scratch)</h2>
+        <span class="badge badge-red">~3 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Demystify the model — build a small GPT from scratch, understand tokenization, pre-training, distillation, and quantization.</p>
+
+    <h3>📚 Topics</h3>
+    <ul>
+        <li><strong>Transformer from scratch:</strong> Embeddings (RoPE), multi-head causal attention, FFN, RMSNorm, residuals</li>
+        <li>Modern: GQA/MQA, SwiGLU, KV cache, MoE (awareness)</li>
+        <li><strong>Tokenization:</strong> Build a BPE tokenizer (à la Karpathy's minbpe)</li>
+        <li><strong>Pre-training:</strong> Data pipeline, next-token prediction, mixed precision, LR schedule, scaling laws</li>
+        <li><strong>Compression:</strong> Knowledge distillation, <strong>quantization</strong> (GPTQ, AWQ, GGUF), pruning</li>
+        <li><strong>GPU &amp; cost:</strong> Memory math (params + grads + optimizer + activations), hardware choice, cost estimation</li>
+    </ul>
+
+    <h3>🛠️ Build a Small LLM From Scratch (capstone)</h3>
+    <ol>
+        <li>BPE tokenizer (your own minbpe-style)</li>
+        <li>GPT model (embeddings, multi-head causal attention, MLP, RMSNorm, RoPE)</li>
+        <li>Pre-training loop (mixed precision, LR schedule, checkpointing, W&amp;B)</li>
+        <li>Sampling/generation with temperature/top-k/top-p</li>
+        <li>(Stretch) Quantize or distill it</li>
+    </ol>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free (essential)</td><td><strong>Andrej Karpathy "Let's build GPT"</strong> + "Let's build the Tokenizer"; Sebastian Raschka LLMs-from-scratch</td></tr>
+            <tr><td>Books</td><td>Build a Large Language Model (From Scratch) — Raschka</td></tr>
+            <tr><td>GitHub</td><td>karpathy/nanoGPT, karpathy/minbpe, rasbt/LLMs-from-scratch</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        Built a working GPT + BPE from scratch, trained it, can quantize/distill models, estimate GPU/VRAM/cost.
+    </div>
+</section>
+
+<!-- ==================== PHASE 11 ==================== -->
+<section id="phase11">
+    <div class="phase-header">
+        <h2>Phase 11 — MLOps &amp; Deployment</h2>
+        <span class="badge badge-red">~3 weeks</span>
+    </div>
+    <p><strong>Goal:</strong> Take models and AI apps from notebook to reliable, observable, cost-efficient production. Your SWE background is your superpower here.</p>
+
+    <h3>📚 Topics</h3>
+    <table>
+        <thead><tr><th>Area</th><th>Key Concepts</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Serving</strong></td><td>FastAPI + streaming; <strong>vLLM</strong> (PagedAttention, continuous batching); Ollama; LiteLLM gateway</td></tr>
+            <tr><td><strong>Packaging</strong></td><td>Docker, GPU containers, GitHub Actions CI/CD, model registries (MLflow, HF Hub)</td></tr>
+            <tr><td><strong>Pipelines</strong></td><td>Airflow, Prefect, Dagster; feature stores; reproducibility (Hydra, seeds)</td></tr>
+            <tr><td><strong>Monitoring</strong></td><td>LangSmith, <strong>Langfuse</strong>, Arize Phoenix; latency/cost/quality tracking; drift detection</td></tr>
+            <tr><td><strong>Cost/Latency</strong></td><td><strong>Caching</strong> (semantic/response), model routing (cheap→strong), quantization, autoscaling, load testing</td></tr>
+            <tr><td><strong>Security</strong></td><td>Secrets management, PII redaction, guardrails (NeMo, Llama Guard), OWASP LLM Top 10</td></tr>
+        </tbody>
+    </table>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"Production-Grade GenAI Service"</strong> — Dockerized vLLM backend, LiteLLM gateway with caching + fallback, Langfuse tracing, eval gate in CI/CD, monitoring dashboard, load test report.</p>
+
+    <h3>📦 Key Resources</h3>
+    <table>
+        <thead><tr><th>Type</th><th>Resource</th></tr></thead>
+        <tbody>
+            <tr><td>Free</td><td>Made With ML (Goku Mohandas); MLOps Zoomcamp; DeepLearning.AI LLMOps courses</td></tr>
+            <tr><td>Books</td><td><strong>AI Engineering</strong> (Chip Huyen); Designing ML Systems (Chip Huyen)</td></tr>
+            <tr><td>Docs</td><td>vLLM, Ollama, LiteLLM, Langfuse, MLflow, Docker, Modal</td></tr>
+            <tr><td>GitHub</td><td>vllm-project/vllm, BerriAI/litellm, langfuse/langfuse, GokuMohandas/Made-With-ML</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        Serve LLMs at high throughput (vLLM), containerize + CI/CD with eval gates, trace &amp; monitor cost/latency/quality, cut cost via caching/routing.
+    </div>
+</section>
+
+<!-- ==================== PHASE 12 ==================== -->
+<section id="phase12">
+    <div class="phase-header">
+        <h2>Phase 12 — Advanced AI Engineering &amp; System Design</h2>
+        <span class="badge badge-red">Ongoing</span>
+    </div>
+    <p><strong>Goal:</strong> Operate at senior level — design large-scale AI systems, evaluation at scale, safety, reliability, and cost.</p>
+
+    <h3>📚 Topics</h3>
+    <ul>
+        <li><strong>AI System Design:</strong> Requirements → Constraints → Data → Model → Retrieval → Orchestration → Serving → Eval → Monitoring → Cost → Iterate</li>
+        <li><strong>Evaluation at Scale:</strong> LLM-as-judge, golden sets, trajectory eval, Ragas/DeepEval/Inspect, benchmarks</li>
+        <li><strong>Scaling:</strong> Distributed inference/training, multi-GPU, sharding, throughput engineering</li>
+        <li><strong>Safety &amp; Security:</strong> OWASP LLM Top 10, prompt injection, excessive agency, red-teaming, guardrails, governance</li>
+        <li><strong>Frontier Awareness:</strong> Reasoning models, multimodal, long-context, MoE, MCP/A2A standards</li>
+        <li><strong>Leadership:</strong> Build-vs-buy, cost modeling, RFCs, mentoring, incident reviews</li>
+    </ul>
+
+    <h3>🎒 Portfolio Project</h3>
+    <p><strong>"AI Platform"</strong> — multi-tenant API (RAG + agents), model gateway/router, tracing + online evals, guardrails, CI/CD eval gates, autoscaling, public design doc + cost analysis.</p>
+
+    <div class="callout">
+        <strong>🏁 Milestone</strong>
+        Design, evaluate, secure, scale, and cost-optimize an end-to-end AI system; defend it against OWASP LLM threats; articulate every trade-off — i.e., operate as a senior AI Engineer.
+    </div>
+</section>
+
+<!-- ==================== TIMELINES ==================== -->
+<section id="timelines">
+    <h2>⏱️ Realistic Timelines (3 / 6 / 12 / 18 / 24 Months)</h2>
+    <p>All timelines assume ~20 hrs/week and that you're a Junior Software Engineer.</p>
+
+    <h3>🟢 3 Months — "Dangerous with GenAI"</h3>
+    <table>
+        <thead><tr><th>Weeks</th><th>Focus</th><th>Phases</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Setup + landscape</td><td>0</td></tr>
+            <tr><td>2–4</td><td>Python for AI + data stack (refresh)</td><td>1</td></tr>
+            <tr><td>5–6</td><td>GenAI essentials + embeddings + HF</td><td>5 (applied)</td></tr>
+            <tr><td>7</td><td>Prompt engineering + structured output + eval</td><td>6</td></tr>
+            <tr><td>8–10</td><td><strong>RAG</strong> (2–3 RAG projects)</td><td>7</td></tr>
+            <tr><td>11–12</td><td><strong>Agents</strong> (single-agent + tools + MCP)</td><td>8 (intro)</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Outcome:</strong> 4–6 shipped projects; comfortable with APIs, RAG, basic agents. Math/DL deferred.</p>
+
+    <h3>🔵 6 Months — Job-Ready as AI/GenAI Engineer ⭐ (Recommended)</h3>
+    <table>
+        <thead><tr><th>Month</th><th>Focus</th><th>Phases</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Setup + Python/DSA/SQL</td><td>0, 1</td></tr>
+            <tr><td>2</td><td>Math intuition + ML</td><td>2, 3</td></tr>
+            <tr><td>3</td><td>Deep Learning + Transformers</td><td>4</td></tr>
+            <tr><td>4</td><td>GenAI + Prompt Engineering</td><td>5, 6</td></tr>
+            <tr><td>5</td><td><strong>RAG (all 5 projects)</strong></td><td>7</td></tr>
+            <tr><td>6</td><td><strong>Agents + Deployment basics</strong></td><td>8, 11 (intro)</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Outcome:</strong> Job-ready for AI Engineer / GenAI Engineer. 10–12 portfolio projects.</p>
+
+    <h3>🟣 12 Months — Specialist-Ready</h3>
+    <table>
+        <thead><tr><th>Months</th><th>Focus</th><th>Phases</th></tr></thead>
+        <tbody>
+            <tr><td>1–3</td><td>Foundations + ML + DL</td><td>0–4</td></tr>
+            <tr><td>4–6</td><td>GenAI + Prompt + RAG + Agents</td><td>5–8</td></tr>
+            <tr><td>7–8</td><td>Fine-tuning (LoRA/QLoRA/DPO)</td><td>9</td></tr>
+            <tr><td>9</td><td>Build a small LLM from scratch</td><td>10</td></tr>
+            <tr><td>10–11</td><td>MLOps &amp; Deployment</td><td>11</td></tr>
+            <tr><td>12</td><td>Advanced system design + capstone</td><td>12</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Outcome:</strong> Competitive for LLM Engineer and mid-level AI Engineer roles. 20+ projects, from-scratch LLM.</p>
+
+    <h3>🟠 18 Months — Senior-Track</h3>
+    <p>Months 1–12 as above + Months 13–15 specialize (LLM/Model <em>or</em> Platform/MLOps) + Months 16–18 capstone, OSS contributions, blog posts, mock interviews.</p>
+
+    <h3>🔴 24 Months — Expert / Staff-Track</h3>
+    <p>18-month plan + lead a substantial AI system, contribute to major OSS, publish (blog/talk/paper), mentor, stay on frontier.</p>
+
+    <h3>📌 Pace Reference</h3>
+    <table>
+        <thead><tr><th>Background</th><th>GenAI-dangerous</th><th>Job-ready</th><th>Specialist</th><th>Senior</th></tr></thead>
+        <tbody>
+            <tr><td>Junior SWE (you)</td><td>~3 mo</td><td>~6 mo</td><td>~12 mo</td><td>~18–24 mo</td></tr>
+            <tr><td>Non-coder beginner</td><td>~6 mo</td><td>~10–12 mo</td><td>~18 mo</td><td>~30+ mo</td></tr>
+            <tr><td>ML-experienced dev</td><td>~1 mo</td><td>~3–4 mo</td><td>~7–8 mo</td><td>~14 mo</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ==================== WEEKLY STUDY PLAN ==================== -->
+<section id="weekly">
+    <h2>📅 Weekly Study Plan (20 hrs/week · 6-Month Fast Track)</h2>
+
+    <h3>🕐 How to Spend 20 Hours/Week</h3>
+    <table>
+        <thead><tr><th>Block</th><th>Hours</th><th>Activity</th></tr></thead>
+        <tbody>
+            <tr><td>Learn</td><td>6</td><td>Courses/reading/videos (1.25–1.5× speed)</td></tr>
+            <tr><td><strong>Build</strong></td><td>10</td><td>Project work — the core</td></tr>
+            <tr><td>Practice</td><td>2</td><td>Exercises/DSA/SQL</td></tr>
+            <tr><td>Reflect</td><td>2</td><td>Write notes, push to GitHub, update tracker</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout warning">
+        <strong>🔑 Rule</strong>
+        Never spend more than ~30% of a week consuming content. You learn AI engineering by building and debugging, not by watching.
+    </div>
+
+    <h3>Month 1 — Foundations (Phases 0–1 + Math start)</h3>
+    <table>
+        <thead><tr><th>Week</th><th>Learn</th><th>Build</th><th>Milestone</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Phase 0: landscape, tools</td><td>LLM Hello World CLI; Ollama</td><td>First LLM call ✅</td></tr>
+            <tr><td>2</td><td>Python refresh, async, NumPy</td><td>Async LLM batch processor</td><td>Typed async script ✅</td></tr>
+            <tr><td>3</td><td>Pandas + SQL + viz</td><td>EDA + SQL analytics</td><td>EDA notebook ✅</td></tr>
+            <tr><td>4</td><td>DSA-for-AI + LinAlg start</td><td>kNN from scratch; DataOps Toolkit</td><td>Toolkit shipped ✅</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Month 2 — Math + ML (Phases 2–3)</h3>
+    <table>
+        <thead><tr><th>Week</th><th>Learn</th><th>Build</th><th>Milestone</th></tr></thead>
+        <tbody>
+            <tr><td>5</td><td>LinAlg + Calculus (3B1B)</td><td>Math-of-ML notebooks</td><td>Math notebooks ✅</td></tr>
+            <tr><td>6</td><td>ML workflow, regression/classification</td><td>Linear/Logistic from scratch</td><td>From-scratch models ✅</td></tr>
+            <tr><td>7</td><td>Trees, XGBoost, feature eng</td><td>Churn/house-price project</td><td>Tuned model ✅</td></tr>
+            <tr><td>8</td><td>Clustering, PCA, model selection</td><td>End-to-End ML Service</td><td><strong>Flagship #1</strong> ✅</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Month 3 — Deep Learning (Phase 4)</h3>
+    <table>
+        <thead><tr><th>Week</th><th>Learn</th><th>Build</th><th>Milestone</th></tr></thead>
+        <tbody>
+            <tr><td>9</td><td>NN foundations, backprop, PyTorch</td><td>MLP from scratch → PyTorch</td><td>Backprop ✅</td></tr>
+            <tr><td>10</td><td>CNNs, transfer learning</td><td>CIFAR-10 classifier + demo</td><td>Vision classifier ✅</td></tr>
+            <tr><td>11</td><td>Attention/Transformer</td><td>Self-attention from scratch</td><td>Attention ✅</td></tr>
+            <tr><td>12</td><td>Transformer deep dive</td><td>DL Fine-Tuner project</td><td><strong>Flagship #2</strong> ✅</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Month 4 — GenAI + Prompts (Phases 5–6)</h3>
+    <table>
+        <thead><tr><th>Week</th><th>Learn</th><th>Build</th><th>Milestone</th></tr></thead>
+        <tbody>
+            <tr><td>13</td><td>LLM internals, tokenization, HF</td><td>Semantic search engine</td><td>Semantic search ✅</td></tr>
+            <tr><td>14</td><td>Embeddings, providers, diffusion</td><td>Multi-provider chat + cost meter</td><td>GenAI Playground ✅</td></tr>
+            <tr><td>15</td><td>Prompt techniques, structured output</td><td>Structured data extractor</td><td>JSON extraction ✅</td></tr>
+            <tr><td>16</td><td>Prompt eval, injection defense</td><td>Prompt Engineering Lab</td><td><strong>Flagship #3</strong> ✅</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Month 5 — RAG (Phase 7)</h3>
+    <table>
+        <thead><tr><th>Week</th><th>Learn</th><th>Build</th><th>Milestone</th></tr></thead>
+        <tbody>
+            <tr><td>17</td><td>RAG architecture, loaders, chunking</td><td>Chat with PDFs</td><td>Naive RAG ✅</td></tr>
+            <tr><td>18</td><td>Hybrid search, embeddings, reranking</td><td>Docs assistant + hybrid engine</td><td>Hybrid + reranking ✅</td></tr>
+            <tr><td>19</td><td>RAG evaluation (Ragas/DeepEval)</td><td>Full eval harness + CI gate</td><td>Measured RAG ✅</td></tr>
+            <tr><td>20</td><td>Advanced RAG, production hardening</td><td>Advanced RAG project</td><td><strong>Flagship #4</strong> ✅</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Month 6 — Agents + Deploy + Job Hunt (Phases 8 + 11)</h3>
+    <table>
+        <thead><tr><th>Week</th><th>Learn</th><th>Build</th><th>Milestone</th></tr></thead>
+        <tbody>
+            <tr><td>21</td><td>Agent loop, tools, ReAct, MCP</td><td>ReAct agent + MCP toolbox</td><td>Agent + MCP ✅</td></tr>
+            <tr><td>22</td><td>LangGraph, memory</td><td>Stateful agent + memory</td><td>Durable agent ✅</td></tr>
+            <tr><td>23</td><td>Multi-agent, deployment basics</td><td>Multi-agent + productionize</td><td><strong>Flagship #5</strong> ✅</td></tr>
+            <tr><td>24</td><td>Interview prep, polish</td><td>Resume + portfolio + apply!</td><td>Applications out ✅</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ==================== PROJECTS ==================== -->
+<section id="projects">
+    <h2>🛠️ The 75-Project Roadmap</h2>
+
+    <h3>🟢 25 Beginner Projects (Phases 0–6)</h3>
+    <table>
+        <thead><tr><th>#</th><th>Project</th><th>Skills</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Multi-provider "Hello LLM" CLI</td><td>PY, LLM</td></tr>
+            <tr><td>2</td><td>Data-cleaning + EDA notebook (Kaggle)</td><td>PY, ML</td></tr>
+            <tr><td>3</td><td>SQLite LLM-usage logger + analytics</td><td>PY</td></tr>
+            <tr><td>4</td><td>Async LLM batch processor</td><td>PY, LLM</td></tr>
+            <tr><td>5</td><td>Linear &amp; logistic regression from scratch</td><td>PY, ML</td></tr>
+            <tr><td>6</td><td>Titanic/house-price ML model (sklearn)</td><td>ML</td></tr>
+            <tr><td>7</td><td>Spam/sentiment classifier (TF-IDF + sklearn)</td><td>ML</td></tr>
+            <tr><td>8</td><td>Customer segmentation (k-Means + PCA)</td><td>ML</td></tr>
+            <tr><td>9</td><td>MNIST digit classifier (PyTorch)</td><td>DL</td></tr>
+            <tr><td>10</td><td>Image classifier with transfer learning + Gradio</td><td>DL</td></tr>
+            <tr><td>11</td><td>Self-attention from scratch (notebook)</td><td>DL</td></tr>
+            <tr><td>12</td><td>Semantic search over 100 documents</td><td>LLM</td></tr>
+            <tr><td>13</td><td>Multi-provider chatbot with streaming + cost meter</td><td>LLM</td></tr>
+            <tr><td>14</td><td>Structured data extractor (text → Pydantic JSON)</td><td>LLM</td></tr>
+            <tr><td>15</td><td>Resume/job-description matcher (embeddings)</td><td>LLM</td></tr>
+            <tr><td>16</td><td>Text summarizer with map-reduce</td><td>LLM</td></tr>
+            <tr><td>17</td><td>Few-shot vs CoT accuracy comparison</td><td>LLM, EVAL</td></tr>
+            <tr><td>18</td><td>Image generator studio (diffusers + Gradio)</td><td>LLM</td></tr>
+            <tr><td>19</td><td>Whisper audio transcriber + summarizer</td><td>LLM</td></tr>
+            <tr><td>20</td><td>"Chat with one PDF" (basic RAG)</td><td>RAG</td></tr>
+            <tr><td>21</td><td>FastAPI ML model wrapper + Docker</td><td>PY, OPS</td></tr>
+            <tr><td>22</td><td>Prompt template manager with versioning</td><td>LLM</td></tr>
+            <tr><td>23</td><td>LLM-as-judge mini evaluator (promptfoo)</td><td>EVAL</td></tr>
+            <tr><td>24</td><td>Personal flashcard generator from notes</td><td>LLM</td></tr>
+            <tr><td>25</td><td>GitHub README generator from a repo</td><td>LLM</td></tr>
+        </tbody>
+    </table>
+
+    <h3>🟡 25 Intermediate Projects (Phases 5–9)</h3>
+    <table>
+        <thead><tr><th>#</th><th>Project</th><th>Skills</th></tr></thead>
+        <tbody>
+            <tr><td>26</td><td>Production "Chat with docs" RAG (citations)</td><td>RAG</td></tr>
+            <tr><td>27</td><td>Hybrid search engine (BM25 + vector + RRF)</td><td>RAG</td></tr>
+            <tr><td>28</td><td>RAG with cross-encoder reranking + eval</td><td>RAG, EVAL</td></tr>
+            <tr><td>29</td><td>Ragas/DeepEval evaluation harness + CI gate</td><td>RAG, EVAL</td></tr>
+            <tr><td>30</td><td>Multi-PDF research assistant with filters</td><td>RAG</td></tr>
+            <tr><td>31</td><td>Website/docs RAG chatbot (scheduled re-index)</td><td>RAG, OPS</td></tr>
+            <tr><td>32</td><td>ReAct research agent (web search + tools)</td><td>AGT</td></tr>
+            <tr><td>33</td><td>Custom MCP server + host client</td><td>AGT</td></tr>
+            <tr><td>34</td><td>Text-to-SQL data-analyst agent</td><td>AGT</td></tr>
+            <tr><td>35</td><td>LangGraph stateful agent + HITL</td><td>AGT</td></tr>
+            <tr><td>36</td><td>CrewAI content team (researcher→writer→editor)</td><td>AGT</td></tr>
+            <tr><td>37</td><td>AutoGen group chat problem solver</td><td>AGT</td></tr>
+            <tr><td>38</td><td>Customer-support agent (RAG + actions + handoff)</td><td>AGT, RAG</td></tr>
+            <tr><td>39</td><td>Long-term memory chatbot (vector memory)</td><td>AGT, LLM</td></tr>
+            <tr><td>40</td><td>XGBoost + Optuna + MLflow + SHAP pipeline</td><td>ML, OPS</td></tr>
+            <tr><td>41</td><td>Recommender system (collaborative + embeddings)</td><td>ML, LLM</td></tr>
+            <tr><td>42</td><td>Image captioning / VQA with multimodal model</td><td>DL, LLM</td></tr>
+            <tr><td>43</td><td>Fine-tune a model with QLoRA</td><td>FT</td></tr>
+            <tr><td>44</td><td>DPO style-alignment of a model</td><td>FT</td></tr>
+            <tr><td>45</td><td>Synthetic dataset generator + cleaner</td><td>FT, LLM</td></tr>
+            <tr><td>46</td><td>Multilingual translation + quality eval</td><td>LLM, EVAL</td></tr>
+            <tr><td>47</td><td>Voice assistant (STT → LLM → TTS)</td><td>LLM</td></tr>
+            <tr><td>48</td><td>Code review assistant (diff → feedback)</td><td>LLM</td></tr>
+            <tr><td>49</td><td>LLM gateway (caching + fallback + cost dashboard)</td><td>OPS</td></tr>
+            <tr><td>50</td><td>GraphRAG over a knowledge graph</td><td>RAG</td></tr>
+        </tbody>
+    </table>
+
+    <h3>🔴 25 Advanced Projects (Phases 8–12)</h3>
+    <table>
+        <thead><tr><th>#</th><th>Project</th><th>Skills</th></tr></thead>
+        <tbody>
+            <tr><td>51</td><td>Multi-agent "company" (supervisor + workers)</td><td>AGT</td></tr>
+            <tr><td>52</td><td>Coding agent (edits repo + runs tests in sandbox)</td><td>AGT, OPS</td></tr>
+            <tr><td>53</td><td>Production agent platform (tracing, evals, limits)</td><td>AGT, OPS, EVAL</td></tr>
+            <tr><td>54</td><td>Browser/computer-use agent</td><td>AGT</td></tr>
+            <tr><td>55</td><td>Advanced agentic RAG (multi-hop, routing, multimodal)</td><td>RAG, AGT</td></tr>
+            <tr><td>56</td><td><strong>Build a small LLM (nano-LLM) from scratch</strong></td><td>DL</td></tr>
+            <tr><td>57</td><td>Build a BPE tokenizer from scratch</td><td>DL</td></tr>
+            <tr><td>58</td><td>Knowledge distillation (teacher → student)</td><td>FT, DL</td></tr>
+            <tr><td>59</td><td>Quantize + serve model (GGUF/AWQ) + benchmark</td><td>OPS, DL</td></tr>
+            <tr><td>60</td><td>Self-hosted high-throughput inference (vLLM)</td><td>OPS</td></tr>
+            <tr><td>61</td><td>Multi-LoRA serving (swap adapters)</td><td>FT, OPS</td></tr>
+            <tr><td>62</td><td>RLHF/GRPO experiment on a small model</td><td>FT</td></tr>
+            <tr><td>63</td><td>Full LLMOps pipeline (CI/CD + eval + registry)</td><td>OPS, EVAL</td></tr>
+            <tr><td>64</td><td>Eval platform (offline + online + dashboards)</td><td>EVAL, OPS</td></tr>
+            <tr><td>65</td><td>Red-team report: attack your agent/RAG + fix</td><td>EVAL, AGT</td></tr>
+            <tr><td>66</td><td>Guardrails layer (injection defense, PII, moderation)</td><td>OPS</td></tr>
+            <tr><td>67</td><td>Multi-tenant RAG SaaS (isolation, billing)</td><td>RAG, OPS</td></tr>
+            <tr><td>68</td><td>Real-time/voice agent with low latency</td><td>AGT, OPS</td></tr>
+            <tr><td>69</td><td>Domain expert: fine-tune + RAG hybrid + eval</td><td>FT, RAG, EVAL</td></tr>
+            <tr><td>70</td><td>Recommendation engine with embeddings at scale</td><td>ML, OPS</td></tr>
+            <tr><td>71</td><td>Document-understanding pipeline (layout, tables, OCR)</td><td>RAG, LLM</td></tr>
+            <tr><td>72</td><td>Autonomous research/report multi-agent system</td><td>AGT</td></tr>
+            <tr><td>73</td><td>Cost-optimization router + savings report</td><td>OPS, LLM</td></tr>
+            <tr><td>74</td><td>Distributed fine-tuning (multi-GPU, FSDP)</td><td>FT, OPS</td></tr>
+            <tr><td>75</td><td><strong>Capstone "AI Platform"</strong>: RAG+agents+gateway+evals+IaC</td><td>ALL</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ==================== JOB ROADMAPS ==================== -->
+<section id="jobs">
+    <h2>💼 Job-Focused Roadmaps (5 Roles)</h2>
+
+    <table>
+        <thead><tr><th>Role</th><th>Core Question</th><th>Key Phases</th><th>2026 Demand</th></tr></thead>
+        <tbody>
+            <tr><td><strong>AI Engineer</strong></td><td>Build AI features into products</td><td>5–8, 11</td><td>Very High</td></tr>
+            <tr><td><strong>Generative AI Engineer</strong></td><td>Build LLM/GenAI apps (RAG/agents)</td><td>5–8</td><td>Very High</td></tr>
+            <tr><td><strong>LLM Engineer</strong></td><td>Adapt/serve/train LLMs</td><td>9–11</td><td>High</td></tr>
+            <tr><td><strong>Applied AI Engineer</strong></td><td>ML + LLM solutions to business</td><td>3–8, 11</td><td>High</td></tr>
+            <tr><td><strong>AI Product Engineer</strong></td><td>Ship AI products users love</td><td>5–8 + product</td><td>High</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Skill Depth Matrix</h3>
+    <table>
+        <thead><tr><th>Skill</th><th>AI Eng</th><th>GenAI</th><th>LLM</th><th>Applied</th><th>Product</th></tr></thead>
+        <tbody>
+            <tr><td>Python / SWE</td><td>●●●</td><td>●●●</td><td>●●●</td><td>●●●</td><td>●●●</td></tr>
+            <tr><td>Math / DL theory</td><td>●●</td><td>●</td><td>●●●</td><td>●●●</td><td>●</td></tr>
+            <tr><td>Classical ML</td><td>●●</td><td>●</td><td>●●</td><td>●●●</td><td>●</td></tr>
+            <tr><td>Prompt engineering</td><td>●●●</td><td>●●●</td><td>●●</td><td>●●</td><td>●●●</td></tr>
+            <tr><td>RAG</td><td>●●●</td><td>●●●</td><td>●●</td><td>●●●</td><td>●●●</td></tr>
+            <tr><td>Agents / MCP</td><td>●●●</td><td>●●●</td><td>●●</td><td>●●</td><td>●●●</td></tr>
+            <tr><td>Fine-tuning</td><td>●</td><td>●●</td><td>●●●</td><td>●●</td><td>●</td></tr>
+            <tr><td>Model internals</td><td>●</td><td>●</td><td>●●●</td><td>●●</td><td>○</td></tr>
+            <tr><td>MLOps / serving</td><td>●●●</td><td>●●</td><td>●●●</td><td>●●</td><td>●●</td></tr>
+            <tr><td>Evaluation</td><td>●●●</td><td>●●●</td><td>●●●</td><td>●●●</td><td>●●</td></tr>
+            <tr><td>Full-stack / UX</td><td>●●</td><td>●●</td><td>○</td><td>●</td><td>●●●</td></tr>
+        </tbody>
+    </table>
+    <p><em>●●● = deep · ●● = solid · ● = working · ○ = awareness</em></p>
+
+    <h3>🚀 Positioning Your Java/SWE Background</h3>
+    <ul>
+        <li>Lead with: "I bring production software discipline (testing, CI/CD, system design) to AI systems"</li>
+        <li>Target hybrid roles first (AI Engineer / GenAI Engineer) — they value SWE most</li>
+        <li>Bridge narrative: "Java/SWE → built X GenAI projects → here's a production RAG/agent I shipped with evals"</li>
+    </ul>
+</section>
+
+<!-- ==================== SKILLS & INTERVIEW ==================== -->
+<section id="skills">
+    <h2>🎯 80/20 Skills · Common Mistakes · Interview Prep</h2>
+
+    <h3>⚡ The 20% of Skills That Yield 80% of Results</h3>
+    <ol>
+        <li><strong>Python fluency + APIs (FastAPI, async, Pydantic)</strong></li>
+        <li><strong>LLM API mastery</strong> — OpenAI + Anthropic, structured outputs, tool calling</li>
+        <li><strong>RAG done right</strong> — hybrid + reranking + <strong>evaluation</strong></li>
+        <li><strong>Agents</strong> — tool calling, ReAct, memory, MCP, LangGraph</li>
+        <li><strong>Evaluation</strong> — golden sets, LLM-as-judge, Ragas/DeepEval (#1 underrated differentiator)</li>
+        <li><strong>Prompt engineering for reliability</strong> — structured output, injection defense</li>
+        <li><strong>Deployment basics</strong> — Docker, vLLM, tracing, cost/latency optimization</li>
+        <li><strong>Building &amp; shipping projects</strong> — portfolio beats certificates</li>
+    </ol>
+
+    <h3>❌ Top Common Mistakes</h3>
+    <table>
+        <thead><tr><th>#</th><th>Mistake</th><th>Fix</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Tutorial hell / no building</td><td>≤30% consuming, ≥70% building. Ship weekly.</td></tr>
+            <tr><td>2</td><td>Math-first paralysis</td><td>Learn just-in-time; don't gate GenAI on calculus.</td></tr>
+            <tr><td>3</td><td>Chasing every new framework</td><td>Master primitives; tools change, fundamentals don't.</td></tr>
+            <tr><td>4</td><td>Naive RAG and stopping there</td><td>Hybrid + rerank + <strong>evaluate</strong>; fix the measured weak stage.</td></tr>
+            <tr><td>5</td><td>No evaluation ("vibe-checking")</td><td>Golden set + LLM-judge + CI gates from day one.</td></tr>
+            <tr><td>6</td><td>Fine-tuning too early</td><td>Prompt → RAG → then FT; FT is for behavior, not facts.</td></tr>
+            <tr><td>7</td><td>Over-engineering agents</td><td>Prefer deterministic workflows; add autonomy only where needed.</td></tr>
+            <tr><td>8</td><td>Ignoring cost/latency</td><td>Track tokens/$; cache; route cheap→strong; quantize.</td></tr>
+            <tr><td>9</td><td>No observability</td><td>Trace every call (Langfuse/LangSmith).</td></tr>
+            <tr><td>10</td><td>Waiting until "ready" to apply</td><td>Apply ~1 month early; interviews teach you.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>🧗 Interview Preparation — 5 Pillars</h3>
+    <table>
+        <thead><tr><th>Pillar</th><th>What</th><th>Prep</th></tr></thead>
+        <tbody>
+            <tr><td><strong>1. Coding</strong></td><td>Python DSA (Easy/Medium): arrays, hashmaps, heaps, graphs</td><td>NeetCode 150 patterns (4 weeks)</td></tr>
+            <tr><td><strong>2. ML/DL Fundamentals</strong></td><td>Bias/variance, attention, transformers, backprop, cross-entropy</td><td>Whiteboard the transformer &amp; training loop</td></tr>
+            <tr><td><strong>3. GenAI Applied</strong></td><td>RAG architecture, agents/tools/MCP, prompting, hallucination</td><td>Design/critique a RAG/agent system out loud</td></tr>
+            <tr><td><strong>4. AI System Design</strong></td><td>Requirements → Constraints → Model → Retrieval → Serving → Eval → Cost</td><td>8–10 mock designs; cover eval, cost, safety</td></tr>
+            <tr><td><strong>5. Project Deep-Dive</strong></td><td>Walk through your flagships: architecture, trade-offs, eval numbers</td><td>Know flagships cold; STAR for behavioral</td></tr>
+        </tbody>
+    </table>
+
+    <h3>4-Week Interview Sprint</h3>
+    <table>
+        <thead><tr><th>Week</th><th>Focus</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Coding patterns (NeetCode) + ML fundamentals review</td></tr>
+            <tr><td>2</td><td>GenAI/RAG/agents Q&amp;A + re-read project READMEs</td></tr>
+            <tr><td>3</td><td>System design mocks (5–6) + eval/cost/safety drills</td></tr>
+            <tr><td>4</td><td>Full mock interviews, behavioral STAR, company research</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ==================== CERTIFICATIONS ==================== -->
+<section id="certs">
+    <h2>🏆 Certifications &amp; Portfolio Strategy</h2>
+
+    <div class="callout tip">
+        <strong>Reality check</strong>
+        A strong public portfolio &gt; certificates. Certs help with HR filters and structure — spend ~80% on projects, ~20% on certs.
+    </div>
+
+    <h3>🎓 Recommended Certifications</h3>
+    <table>
+        <thead><tr><th>Tier</th><th>Certification</th><th>Notes</th></tr></thead>
+        <tbody>
+            <tr><td>1 (High)</td><td>DeepLearning.AI — DL Specialization</td><td>Best foundational DL credential</td></tr>
+            <tr><td>1</td><td>DeepLearning.AI — Generative AI with LLMs</td><td>Applied LLM credibility</td></tr>
+            <tr><td>1</td><td>Hugging Face — NLP/LLM &amp; AI Agents</td><td>Free, hands-on, respected</td></tr>
+            <tr><td>2 (Cloud)</td><td>AWS ML Specialty / AI Practitioner</td><td>AWS/Bedrock shops</td></tr>
+            <tr><td>2</td><td>Google Cloud Professional ML Engineer</td><td>GCP/Vertex shops</td></tr>
+            <tr><td>2</td><td>Azure AI Engineer Associate (AI-102)</td><td>Azure/OpenAI shops</td></tr>
+            <tr><td>2</td><td>Databricks Generative AI Engineer</td><td>Data+AI platform roles</td></tr>
+        </tbody>
+    </table>
+
+    <h3>💼 Portfolio Strategy</h3>
+    <h4>Anatomy of a Hireable Portfolio</h4>
+    <ol>
+        <li><strong>Pinned GitHub profile</strong> with clean README</li>
+        <li><strong>5–8 polished flagships</strong> (README + architecture diagram + eval numbers + live demo)</li>
+        <li><strong>Technical blog</strong> (3–6 posts)</li>
+        <li><strong>OSS contributions</strong> (even small: docs, bugs to LangChain/vLLM/HF)</li>
+        <li>Updated LinkedIn + one-page resume</li>
+    </ol>
+
+    <h4>Flagship Mix That Sells (2026)</h4>
+    <table>
+        <thead><tr><th>Project Type</th><th>Why It Lands Interviews</th></tr></thead>
+        <tbody>
+            <tr><td>Production RAG (hybrid + rerank + eval)</td><td>Most-requested applied skill</td></tr>
+            <tr><td>Agent system (tools, memory, MCP, traced)</td><td>Defining 2026 hiring theme</td></tr>
+            <tr><td>Fine-tuned model + model card on HF Hub</td><td>Shows you go below the API</td></tr>
+            <tr><td>nano-LLM from scratch</td><td>Rare differentiator; true understanding</td></tr>
+            <tr><td>Productionized service (Docker, vLLM, monitoring)</td><td>Proves you can ship, not just demo</td></tr>
+        </tbody>
+    </table>
+
+    <h4>Do's and Don'ts</h4>
+    <ul>
+        <li>✅ Document trade-offs and eval numbers</li>
+        <li>✅ Show before/after improvements</li>
+        <li>✅ Keep repos clean: no secrets, good README, tests</li>
+        <li>❌ Don't dump 30 half-finished tutorials. Quality &gt; quantity.</li>
+        <li>❌ Don't hide demos behind walls — runnable/viewable in &lt;2 min</li>
+    </ul>
+</section>
+
+<!-- ==================== PROGRESS TRACKING ==================== -->
+<section id="progress">
+    <h2>✅ Progress Tracking · Checklists · Milestones</h2>
+
+    <h3>🏁 Master Milestones</h3>
+    <table>
+        <thead><tr><th>Milestone</th><th>Phase</th><th>Done</th></tr></thead>
+        <tbody>
+            <tr><td>Cloud + local LLMs working; env set up</td><td>0</td><td>☐</td></tr>
+            <tr><td>Typed/tested Python toolkit shipped; SQL fluent</td><td>1</td><td>☐</td></tr>
+            <tr><td>Linear/logistic regression from scratch; math intuition</td><td>2</td><td>☐</td></tr>
+            <tr><td>End-to-end ML service deployed (FastAPI + Docker)</td><td>3</td><td>☐</td></tr>
+            <tr><td>Self-attention from scratch; DL fine-tuner shipped</td><td>4</td><td>☐</td></tr>
+            <tr><td>GenAI playground (multi-provider + embeddings)</td><td>5</td><td>☐</td></tr>
+            <tr><td>Prompt eval lab (versioned + CI)</td><td>6</td><td>☐</td></tr>
+            <tr><td><strong>Production RAG (hybrid + rerank + evaluated)</strong></td><td>7</td><td>☐</td></tr>
+            <tr><td><strong>Agent system (tools + memory + MCP + traced)</strong></td><td>8</td><td>☐</td></tr>
+            <tr><td>Fine-tuned model + model card on HF Hub</td><td>9</td><td>☐</td></tr>
+            <tr><td>nano-LLM built &amp; trained from scratch</td><td>10</td><td>☐</td></tr>
+            <tr><td>Productionized GenAI service (vLLM + CI eval gate)</td><td>11</td><td>☐</td></tr>
+            <tr><td>AI Platform capstone + system-design docs</td><td>12</td><td>☐</td></tr>
+            <tr><td><strong>🎯 JOB-READY (portfolio live, applications out)</strong></td><td>—</td><td>☐</td></tr>
+        </tbody>
+    </table>
+
+    <h3>📈 Skill Self-Assessment (rate 1–5, revisit monthly)</h3>
+    <table>
+        <thead><tr><th>Skill</th><th>Start</th><th>Month 3</th><th>Month 6</th><th>Month 12</th></tr></thead>
+        <tbody>
+            <tr><td>Python / SWE for AI</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Math / DL fundamentals</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Classical ML</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Prompt engineering</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>RAG</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Agents / MCP</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Fine-tuning</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Model internals</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>MLOps / serving</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Evaluation</td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+    </table>
+
+    <h3>🧭 Weekly Habits Checklist</h3>
+    <ul class="checklist">
+        <li>Commit code at least 5 days this week</li>
+        <li>Ship/advance one project</li>
+        <li>Solve 2–3 DSA/SQL problems</li>
+        <li>Write a short note/blog on what I learned</li>
+        <li>Update progress tracker</li>
+        <li>Read one high-signal AI source</li>
+    </ul>
+</section>
+
+<!-- ==================== RESOURCES ==================== -->
+<section id="resources">
+    <h2>📚 Master Resource Library</h2>
+
+    <h3>🎥 Top Free Courses</h3>
+    <table>
+        <thead><tr><th>Topic</th><th>Course</th><th>Provider</th></tr></thead>
+        <tbody>
+            <tr><td>Python</td><td>CS50P; Kaggle Learn</td><td>Harvard; Kaggle</td></tr>
+            <tr><td>Math</td><td>Essence of LinAlg/Calc; Khan Academy</td><td>3Blue1Brown; Khan</td></tr>
+            <tr><td>ML</td><td>ML Specialization; StatQuest</td><td>DeepLearning.AI</td></tr>
+            <tr><td>DL</td><td><strong>NN Zero to Hero</strong>; fast.ai; DL Specialization</td><td>Karpathy; fast.ai; DL.AI</td></tr>
+            <tr><td>GenAI/LLMs</td><td><strong>HF LLM Course</strong>; DeepLearning.AI short courses</td><td>Hugging Face; DL.AI</td></tr>
+            <tr><td>RAG</td><td>Building &amp; Evaluating Advanced RAG</td><td>DL.AI + LlamaIndex</td></tr>
+            <tr><td>Agents</td><td><strong>HF AI Agents Course</strong>; AI Agents in LangGraph</td><td>HF; DL.AI</td></tr>
+            <tr><td>Fine-tuning</td><td>Finetuning LLMs; Unsloth notebooks</td><td>DL.AI; Unsloth</td></tr>
+            <tr><td>MLOps</td><td><strong>Made With ML</strong>; MLOps Zoomcamp</td><td>G. Mohandas; DataTalksClub</td></tr>
+        </tbody>
+    </table>
+
+    <h3>📖 Essential Books</h3>
+    <table>
+        <thead><tr><th>Book</th><th>Author</th><th>Best For</th></tr></thead>
+        <tbody>
+            <tr><td>Hands-On Machine Learning (3rd ed.)</td><td>Aurélien Géron</td><td>ML + DL practical bible</td></tr>
+            <tr><td>Mathematics for Machine Learning (free)</td><td>Deisenroth et al.</td><td>Math foundations</td></tr>
+            <tr><td>Build a Large Language Model (From Scratch)</td><td>Sebastian Raschka</td><td>LLM internals</td></tr>
+            <tr><td>Hands-On Large Language Models</td><td>Alammar &amp; Grootendorst</td><td>Applied LLMs</td></tr>
+            <tr><td><strong>AI Engineering</strong> (2025)</td><td>Chip Huyen</td><td>Production LLM systems</td></tr>
+            <tr><td>Designing Machine Learning Systems</td><td>Chip Huyen</td><td>MLOps</td></tr>
+            <tr><td>LLM Engineer's Handbook</td><td>Iusztin &amp; Labonne</td><td>FT + LLMOps</td></tr>
+            <tr><td>Fluent Python</td><td>Luciano Ramalho</td><td>Pythonic mastery</td></tr>
+        </tbody>
+    </table>
+
+    <h3>▶️ Top YouTube Channels</h3>
+    <table>
+        <thead><tr><th>Channel</th><th>Focus</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Andrej Karpathy</strong></td><td>LLMs/transformers from scratch (essential)</td></tr>
+            <tr><td><strong>3Blue1Brown</strong></td><td>Math + neural net intuition</td></tr>
+            <tr><td><strong>StatQuest</strong></td><td>ML/stats explained simply</td></tr>
+            <tr><td>Sebastian Raschka</td><td>LLMs, fine-tuning</td></tr>
+            <tr><td>Umar Jamil</td><td>Paper implementations (LoRA/DPO/transformer)</td></tr>
+            <tr><td>LangChain / LlamaIndex</td><td>RAG + agents</td></tr>
+            <tr><td>Sam Witteveen / AI Jason / Cole Medin</td><td>Applied GenAI/agents/MCP</td></tr>
+            <tr><td>Corey Schafer / ArjanCodes</td><td>Python</td></tr>
+        </tbody>
+    </table>
+
+    <h3>🧰 The 2026 AI Engineer Toolchain</h3>
+    <table>
+        <thead><tr><th>Category</th><th>Tools</th></tr></thead>
+        <tbody>
+            <tr><td>Language</td><td>Python 3.11+, uv, ruff, pytest, mypy</td></tr>
+            <tr><td>Data</td><td>NumPy, Pandas, Polars, DuckDB, SQL/Postgres</td></tr>
+            <tr><td>ML</td><td>scikit-learn, XGBoost, Optuna, MLflow, SHAP</td></tr>
+            <tr><td>DL</td><td>PyTorch, Lightning, (TensorFlow/Keras)</td></tr>
+            <tr><td>LLM Access</td><td>OpenAI, Anthropic, Gemini, Ollama, vLLM, LiteLLM</td></tr>
+            <tr><td>Embeddings/VectorDB</td><td>Sentence-Transformers, BGE/E5, Qdrant, pgvector, Chroma</td></tr>
+            <tr><td>Frameworks</td><td>LangChain, LlamaIndex, LangGraph, CrewAI, AutoGen, Pydantic AI</td></tr>
+            <tr><td>Agents/Tools</td><td>MCP, function calling, smolagents</td></tr>
+            <tr><td>Fine-tuning</td><td>HF PEFT/TRL, Unsloth, Axolotl, bitsandbytes</td></tr>
+            <tr><td>Eval</td><td>Ragas, DeepEval, promptfoo, LangSmith, Phoenix</td></tr>
+            <tr><td>Serving/Ops</td><td>FastAPI, Docker, vLLM, BentoML, Modal, GitHub Actions</td></tr>
+            <tr><td>Observability</td><td>Langfuse, LangSmith, Arize Phoenix, OpenTelemetry</td></tr>
+            <tr><td>Safety</td><td>Guardrails AI, NeMo Guardrails, Llama Guard, OWASP</td></tr>
+            <tr><td>Demos</td><td>Gradio, Streamlit, Hugging Face Spaces</td></tr>
+        </tbody>
+    </table>
+
+    <h3>📰 Stay-Current Sources</h3>
+    <ul>
+        <li><strong>The Batch</strong> (DeepLearning.AI) — weekly newsletter</li>
+        <li><strong>Latent Space</strong> — podcast + newsletter (AI engineering)</li>
+        <li><strong>Ahead of AI</strong> (Sebastian Raschka) — research→practice</li>
+        <li><strong>Lilian Weng's blog</strong>, <strong>Chip Huyen's blog</strong>, <strong>Simon Willison's blog</strong></li>
+        <li><strong>Hugging Face blog / Daily Papers</strong></li>
+    </ul>
+
+    <h3>🌐 Communities</h3>
+    <p>Hugging Face Discord · LangChain &amp; LlamaIndex Discords · r/MachineLearning · r/LocalLLaMA · MLOps.community Slack · Latent Space Discord · DeepLearning.AI community · Local AI/ML meetups</p>
+</section>
+
+<!-- Footer -->
+<section style="margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);text-align:center;">
+    <p style="color:var(--text-muted);font-size:0.85rem;">
+        🚀 <strong>AI Engineer Roadmap: From Java/Software Engineer to GenAI Expert</strong><br>
+        Updated for 2026 · Built for a Junior SWE aiming to be job-ready ASAP<br><br>
+        ⭐ Star this repo · Fork it · Turn the checklists into your personal AI Engineering journal<br><br>
+        <a href="https://github.com/NAVEENBANDI123/AI-Engineer-Roadmap-Java-to-GenAI">View on GitHub</a>
+    </p>
+</section>
+
+</main>
+
+<!-- Sidebar active link highlighting -->
+<script>
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.sidebar nav a');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                });
+            }
+        });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+
+    // Close sidebar on mobile when link clicked
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+        a.addEventListener('click', () => {
+            if (window.innerWidth <= 900) document.querySelector('.sidebar').classList.remove('open');
+        });
+    });
+</script>
+</body>
+</html>
